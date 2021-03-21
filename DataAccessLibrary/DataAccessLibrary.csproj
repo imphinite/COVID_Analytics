@@ -156,13 +156,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\AnalyticsContext.cs" />
+    <Compile Include="Dimensions\DimAgeGroup.cs" />
+    <Compile Include="Dimensions\DimCase.cs" />
+    <Compile Include="Dimensions\DimHealthAuthority.cs" />
+    <Compile Include="Dimensions\DimLabTestReport.cs" />
+    <Compile Include="Dimensions\DimRegion.cs" />
+    <Compile Include="Dimensions\DimHealthServiceDeliveryArea.cs" />
+    <Compile Include="Models\AgeGroup.cs" />
+    <Compile Include="Models\Case.cs" />
+    <Compile Include="Models\HealthAuthority.cs" />
+    <Compile Include="Models\HealthServiceDeliveryArea.cs" />
+    <Compile Include="Models\LabTestReport.cs" />
+    <Compile Include="Models\Region.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dimensions\" />
     <Folder Include="Facts\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

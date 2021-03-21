@@ -1,0 +1,30 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace DataAccessLibrary.Models
+{
+    public class LabTestReport
+    {
+        public Guid LabTestReportID { get; set; }
+
+        [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
+        public DateTime Date { get; set; }
+
+        public Guid HealthAuthorityID { get; set; }
+        public HealthAuthority HealthAuthority { get; set; }
+
+        [Column(TypeName = "integer default '0'")]
+        public int NewTests { get; set; }
+
+        [Column(TypeName = "integer default '0'")]
+        public int TotalTests { get; set; }
+
+        [Column(TypeName = "decimal(10,1) default '0.0'")]
+        public decimal Positivity { get; set; }
+
+        [Column(TypeName = "decimal(10,1) default '0.0'")]
+        public decimal TurnAround { get; set; }
+    }
+}
