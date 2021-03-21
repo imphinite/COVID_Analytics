@@ -12,7 +12,7 @@ namespace DataAccessLibrary.Migrations
                 columns: table => new
                 {
                     AgeGroupID = table.Column<Guid>(nullable: false),
-                    LowerBound = table.Column<int>(nullable: false),
+                    LowerBound = table.Column<int>(type: "integer default '0'", nullable: false),
                     UpperBound = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -53,8 +53,8 @@ namespace DataAccessLibrary.Migrations
                 columns: table => new
                 {
                     RegionID = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", nullable: true),
-                    Province = table.Column<string>(type: "nvarchar(128)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(128) default 'Unknown'", nullable: true),
+                    Province = table.Column<string>(type: "nvarchar(128) default 'Unknown'", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,15 +67,14 @@ namespace DataAccessLibrary.Migrations
                 {
                     DimHealthAuthorityKey = table.Column<Guid>(nullable: false),
                     HealthAuthorityID = table.Column<Guid>(nullable: false),
-                    DimRegionKey = table.Column<Guid>(nullable: false),
-                    DimRegionKey1 = table.Column<Guid>(nullable: true)
+                    DimRegionKey = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DimHealthAuthorities", x => x.DimHealthAuthorityKey);
                     table.ForeignKey(
-                        name: "FK_DimHealthAuthorities_DimRegions_DimRegionKey1",
-                        column: x => x.DimRegionKey1,
+                        name: "FK_DimHealthAuthorities_DimRegions_DimRegionKey",
+                        column: x => x.DimRegionKey,
                         principalTable: "DimRegions",
                         principalColumn: "DimRegionKey",
                         onDelete: ReferentialAction.Restrict);
@@ -106,25 +105,23 @@ namespace DataAccessLibrary.Migrations
                     DimCaseKey = table.Column<Guid>(nullable: false),
                     CaseID = table.Column<Guid>(nullable: false),
                     ReportedDate = table.Column<DateTime>(type: "date", nullable: false),
-                    DimHealthAuthorityKey = table.Column<Guid>(nullable: false),
-                    DimHealthAuthorityKey1 = table.Column<Guid>(nullable: true),
+                    DimHealthAuthorityKey = table.Column<Guid>(nullable: true),
                     Sex = table.Column<string>(type: "nvarchar(32)", nullable: true),
-                    DimAgeGroupKey = table.Column<Guid>(nullable: false),
-                    DimAgeGroupKey1 = table.Column<Guid>(nullable: true),
+                    DimAgeGroupKey = table.Column<Guid>(nullable: true),
                     ClassificationReported = table.Column<string>(type: "nvarchar(128)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DimCases", x => x.DimCaseKey);
                     table.ForeignKey(
-                        name: "FK_DimCases_DimAgeGroups_DimAgeGroupKey1",
-                        column: x => x.DimAgeGroupKey1,
+                        name: "FK_DimCases_DimAgeGroups_DimAgeGroupKey",
+                        column: x => x.DimAgeGroupKey,
                         principalTable: "DimAgeGroups",
                         principalColumn: "DimAgeGroupKey",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DimCases_DimHealthAuthorities_DimHealthAuthorityKey1",
-                        column: x => x.DimHealthAuthorityKey1,
+                        name: "FK_DimCases_DimHealthAuthorities_DimHealthAuthorityKey",
+                        column: x => x.DimHealthAuthorityKey,
                         principalTable: "DimHealthAuthorities",
                         principalColumn: "DimHealthAuthorityKey",
                         onDelete: ReferentialAction.Restrict);
@@ -136,14 +133,14 @@ namespace DataAccessLibrary.Migrations
                 {
                     DimHealthServiceDeliveryAreaKey = table.Column<Guid>(nullable: false),
                     HealthServiceDeliveryAreaID = table.Column<Guid>(nullable: false),
-                    DimHealthAuthorityKey1 = table.Column<Guid>(nullable: true)
+                    DimHealthAuthorityKey = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DimHealthServiceDeliveryAreas", x => x.DimHealthServiceDeliveryAreaKey);
                     table.ForeignKey(
-                        name: "FK_DimHealthServiceDeliveryAreas_DimHealthAuthorities_DimHealthAuthorityKey1",
-                        column: x => x.DimHealthAuthorityKey1,
+                        name: "FK_DimHealthServiceDeliveryAreas_DimHealthAuthorities_DimHealthAuthorityKey",
+                        column: x => x.DimHealthAuthorityKey,
                         principalTable: "DimHealthAuthorities",
                         principalColumn: "DimHealthAuthorityKey",
                         onDelete: ReferentialAction.Restrict);
@@ -156,8 +153,7 @@ namespace DataAccessLibrary.Migrations
                     DimLabTestReportKey = table.Column<Guid>(nullable: false),
                     LabTestReportID = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(type: "date", nullable: false),
-                    DimHealthAuthorityKey = table.Column<Guid>(nullable: false),
-                    DimHealthAuthorityKey1 = table.Column<Guid>(nullable: true),
+                    DimHealthAuthorityKey = table.Column<Guid>(nullable: true),
                     NewTests = table.Column<int>(type: "integer default '0'", nullable: false),
                     TotalTests = table.Column<int>(type: "integer default '0'", nullable: false),
                     Positivity = table.Column<decimal>(type: "decimal(10,1) default '0.0'", nullable: false),
@@ -167,8 +163,8 @@ namespace DataAccessLibrary.Migrations
                 {
                     table.PrimaryKey("PK_DimLabTestReports", x => x.DimLabTestReportKey);
                     table.ForeignKey(
-                        name: "FK_DimLabTestReports_DimHealthAuthorities_DimHealthAuthorityKey1",
-                        column: x => x.DimHealthAuthorityKey1,
+                        name: "FK_DimLabTestReports_DimHealthAuthorities_DimHealthAuthorityKey",
+                        column: x => x.DimHealthAuthorityKey,
                         principalTable: "DimHealthAuthorities",
                         principalColumn: "DimHealthAuthorityKey",
                         onDelete: ReferentialAction.Restrict);
@@ -180,11 +176,10 @@ namespace DataAccessLibrary.Migrations
                 {
                     CaseID = table.Column<Guid>(nullable: false),
                     ReportedDate = table.Column<DateTime>(type: "date", nullable: false),
-                    HeathAuthorityID = table.Column<Guid>(nullable: false),
-                    HealthAuthorityID = table.Column<Guid>(nullable: true),
-                    Sex = table.Column<string>(type: "nvarchar(32)", nullable: true),
+                    HealthAuthorityID = table.Column<Guid>(nullable: false),
+                    Sex = table.Column<string>(type: "nvarchar(32)", nullable: false),
                     AgeGroupID = table.Column<Guid>(nullable: false),
-                    ClassificationReported = table.Column<string>(type: "nvarchar(128)", nullable: true)
+                    ClassificationReported = table.Column<string>(type: "nvarchar(128)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -200,7 +195,7 @@ namespace DataAccessLibrary.Migrations
                         column: x => x.HealthAuthorityID,
                         principalTable: "HealthAuthorities",
                         principalColumn: "HealthAuthorityID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -255,29 +250,29 @@ namespace DataAccessLibrary.Migrations
                 column: "HealthAuthorityID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DimCases_DimAgeGroupKey1",
+                name: "IX_DimCases_DimAgeGroupKey",
                 table: "DimCases",
-                column: "DimAgeGroupKey1");
+                column: "DimAgeGroupKey");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DimCases_DimHealthAuthorityKey1",
+                name: "IX_DimCases_DimHealthAuthorityKey",
                 table: "DimCases",
-                column: "DimHealthAuthorityKey1");
+                column: "DimHealthAuthorityKey");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DimHealthAuthorities_DimRegionKey1",
+                name: "IX_DimHealthAuthorities_DimRegionKey",
                 table: "DimHealthAuthorities",
-                column: "DimRegionKey1");
+                column: "DimRegionKey");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DimHealthServiceDeliveryAreas_DimHealthAuthorityKey1",
+                name: "IX_DimHealthServiceDeliveryAreas_DimHealthAuthorityKey",
                 table: "DimHealthServiceDeliveryAreas",
-                column: "DimHealthAuthorityKey1");
+                column: "DimHealthAuthorityKey");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DimLabTestReports_DimHealthAuthorityKey1",
+                name: "IX_DimLabTestReports_DimHealthAuthorityKey",
                 table: "DimLabTestReports",
-                column: "DimHealthAuthorityKey1");
+                column: "DimHealthAuthorityKey");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HealthAuthorities_RegionID",

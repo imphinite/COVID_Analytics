@@ -15,13 +15,11 @@ namespace DataAccessLibrary.Dimensions
         [Column(TypeName = "date")]
         public DateTime ReportedDate { get; set; }
 
-        public Guid DimHealthAuthorityKey { get; set; }
         public DimHealthAuthority DimHealthAuthority { get; set; }
 
         [Column(TypeName = "nvarchar(32)")]
         public string Sex { get; set; }
 
-        public Guid DimAgeGroupKey { get; set; }
         public DimAgeGroup DimAgeGroup { get; set; }
 
         [Column(TypeName = "nvarchar(128)")]

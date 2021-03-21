@@ -162,9 +162,9 @@
     <Compile Include="Dimensions\DimLabTestReport.cs" />
     <Compile Include="Dimensions\DimRegion.cs" />
     <Compile Include="Dimensions\DimHealthServiceDeliveryArea.cs" />
-    <Compile Include="Migrations\20210321232317_InitialDBCreation.cs" />
-    <Compile Include="Migrations\20210321232317_InitialDBCreation.designer.cs">
-      <DependentUpon>20210321232317_InitialDBCreation.cs</DependentUpon>
+    <Compile Include="Migrations\20210321234133_InitialDBCreation.cs" />
+    <Compile Include="Migrations\20210321234133_InitialDBCreation.designer.cs">
+      <DependentUpon>20210321234133_InitialDBCreation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AnalyticsContextModelSnapshot.cs" />
     <Compile Include="Models\AgeGroup.cs" />

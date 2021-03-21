@@ -15,7 +15,6 @@ namespace DataAccessLibrary.Dimensions
         [Column(TypeName = "date")]
         public DateTime Date { get; set; }
 
-        public Guid DimHealthAuthorityKey { get; set; }
         public DimHealthAuthority DimHealthAuthority { get; set; }
 
         [Column(TypeName = "integer default '0'")]

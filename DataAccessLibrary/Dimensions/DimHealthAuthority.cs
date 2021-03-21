@@ -11,7 +11,6 @@ namespace DataAccessLibrary.Dimensions
 
         public Guid HealthAuthorityID { get; set; }
 
-        public Guid DimRegionKey { get; set; }
         public DimRegion DimRegion { get; set; }
 
         public List<DimHealthServiceDeliveryArea> DimHealthServiceDeliveryAreas { get; set; } = new List<DimHealthServiceDeliveryArea>();

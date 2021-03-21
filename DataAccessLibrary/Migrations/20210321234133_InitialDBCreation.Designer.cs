@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLibrary.Migrations
 {
     [DbContext(typeof(AnalyticsContext))]
-    [Migration("20210321232317_InitialDBCreation")]
+    [Migration("20210321234133_InitialDBCreation")]
     partial class InitialDBCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,16 +53,10 @@ namespace DataAccessLibrary.Migrations
                     b.Property<string>("ClassificationReported")
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<Guid>("DimAgeGroupKey")
+                    b.Property<Guid?>("DimAgeGroupKey")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DimAgeGroupKey1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DimHealthAuthorityKey")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DimHealthAuthorityKey1")
+                    b.Property<Guid?>("DimHealthAuthorityKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ReportedDate")
@@ -73,9 +67,9 @@ namespace DataAccessLibrary.Migrations
 
                     b.HasKey("DimCaseKey");
 
-                    b.HasIndex("DimAgeGroupKey1");
+                    b.HasIndex("DimAgeGroupKey");
 
-                    b.HasIndex("DimHealthAuthorityKey1");
+                    b.HasIndex("DimHealthAuthorityKey");
 
                     b.ToTable("DimCases");
                 });
@@ -86,10 +80,7 @@ namespace DataAccessLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("DimRegionKey")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DimRegionKey1")
+                    b.Property<Guid?>("DimRegionKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("HealthAuthorityID")
@@ -97,7 +88,7 @@ namespace DataAccessLibrary.Migrations
 
                     b.HasKey("DimHealthAuthorityKey");
 
-                    b.HasIndex("DimRegionKey1");
+                    b.HasIndex("DimRegionKey");
 
                     b.ToTable("DimHealthAuthorities");
                 });
@@ -108,7 +99,7 @@ namespace DataAccessLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DimHealthAuthorityKey1")
+                    b.Property<Guid?>("DimHealthAuthorityKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("HealthServiceDeliveryAreaID")
@@ -116,7 +107,7 @@ namespace DataAccessLibrary.Migrations
 
                     b.HasKey("DimHealthServiceDeliveryAreaKey");
 
-                    b.HasIndex("DimHealthAuthorityKey1");
+                    b.HasIndex("DimHealthAuthorityKey");
 
                     b.ToTable("DimHealthServiceDeliveryAreas");
                 });
@@ -130,10 +121,7 @@ namespace DataAccessLibrary.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("date");
 
-                    b.Property<Guid>("DimHealthAuthorityKey")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DimHealthAuthorityKey1")
+                    b.Property<Guid?>("DimHealthAuthorityKey")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("LabTestReportID")
@@ -153,7 +141,7 @@ namespace DataAccessLibrary.Migrations
 
                     b.HasKey("DimLabTestReportKey");
 
-                    b.HasIndex("DimHealthAuthorityKey1");
+                    b.HasIndex("DimHealthAuthorityKey");
 
                     b.ToTable("DimLabTestReports");
                 });
@@ -185,7 +173,7 @@ namespace DataAccessLibrary.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("LowerBound")
-                        .HasColumnType("int");
+                        .HasColumnType("integer default '0'");
 
                     b.Property<int>("UpperBound")
                         .HasColumnType("int");
@@ -205,18 +193,17 @@ namespace DataAccessLibrary.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ClassificationReported")
+                        .IsRequired()
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<Guid?>("HealthAuthorityID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("HeathAuthorityID")
+                    b.Property<Guid>("HealthAuthorityID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ReportedDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Sex")
+                        .IsRequired()
                         .HasColumnType("nvarchar(32)");
 
                     b.HasKey("CaseID");
@@ -298,10 +285,10 @@ namespace DataAccessLibrary.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(128) default 'Unknown'");
 
                     b.Property<string>("Province")
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(128) default 'Unknown'");
 
                     b.HasKey("RegionID");
 
@@ -312,32 +299,32 @@ namespace DataAccessLibrary.Migrations
                 {
                     b.HasOne("DataAccessLibrary.Dimensions.DimAgeGroup", "DimAgeGroup")
                         .WithMany()
-                        .HasForeignKey("DimAgeGroupKey1");
+                        .HasForeignKey("DimAgeGroupKey");
 
                     b.HasOne("DataAccessLibrary.Dimensions.DimHealthAuthority", "DimHealthAuthority")
                         .WithMany()
-                        .HasForeignKey("DimHealthAuthorityKey1");
+                        .HasForeignKey("DimHealthAuthorityKey");
                 });
 
             modelBuilder.Entity("DataAccessLibrary.Dimensions.DimHealthAuthority", b =>
                 {
                     b.HasOne("DataAccessLibrary.Dimensions.DimRegion", "DimRegion")
                         .WithMany()
-                        .HasForeignKey("DimRegionKey1");
+                        .HasForeignKey("DimRegionKey");
                 });
 
             modelBuilder.Entity("DataAccessLibrary.Dimensions.DimHealthServiceDeliveryArea", b =>
                 {
                     b.HasOne("DataAccessLibrary.Dimensions.DimHealthAuthority", "DimHealthAuthority")
                         .WithMany("DimHealthServiceDeliveryAreas")
-                        .HasForeignKey("DimHealthAuthorityKey1");
+                        .HasForeignKey("DimHealthAuthorityKey");
                 });
 
             modelBuilder.Entity("DataAccessLibrary.Dimensions.DimLabTestReport", b =>
                 {
                     b.HasOne("DataAccessLibrary.Dimensions.DimHealthAuthority", "DimHealthAuthority")
                         .WithMany()
-                        .HasForeignKey("DimHealthAuthorityKey1");
+                        .HasForeignKey("DimHealthAuthorityKey");
                 });
 
             modelBuilder.Entity("DataAccessLibrary.Models.Case", b =>
@@ -350,7 +337,9 @@ namespace DataAccessLibrary.Migrations
 
                     b.HasOne("DataAccessLibrary.Models.HealthAuthority", "HealthAuthority")
                         .WithMany()
-                        .HasForeignKey("HealthAuthorityID");
+                        .HasForeignKey("HealthAuthorityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataAccessLibrary.Models.HealthAuthority", b =>

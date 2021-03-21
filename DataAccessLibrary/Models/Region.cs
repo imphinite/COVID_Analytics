@@ -7,10 +7,10 @@ namespace DataAccessLibrary.Models
     {
         public Guid RegionID { get; set; }
 
-        [Column(TypeName = "nvarchar(128)")]
+        [Column(TypeName = "nvarchar(128) default 'Unknown'")]
         public string Name { get; set; }
 
-        [Column(TypeName = "nvarchar(128)")]
+        [Column(TypeName = "nvarchar(128) default 'Unknown'")]
         public string Province { get; set; }
     }
 }

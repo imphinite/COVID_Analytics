@@ -10,7 +10,6 @@ namespace DataAccessLibrary.Dimensions
 
         public Guid HealthServiceDeliveryAreaID { get; set; }
 
-        public Guid DimHealthAuthorityKey;
         public DimHealthAuthority DimHealthAuthority { get; set; }
     }
 }
