@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLibrary.Migrations
 {
     [DbContext(typeof(AnalyticsContext))]
-    [Migration("20210321234133_InitialDBCreation")]
-    partial class InitialDBCreation
+    [Migration("20210328001448_InitDBCreation")]
+    partial class InitDBCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,6 +98,9 @@ namespace DataAccessLibrary.Migrations
                     b.Property<Guid>("DimHealthServiceDeliveryAreaKey")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<Guid?>("DimHealthAuthorityKey")
                         .HasColumnType("uniqueidentifier");
@@ -237,12 +240,15 @@ namespace DataAccessLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("HealthAuthorityID1")
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<Guid?>("HealthAuthorityID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("HealthServiceDeliveryAreaID");
 
-                    b.HasIndex("HealthAuthorityID1");
+                    b.HasIndex("HealthAuthorityID");
 
                     b.ToTable("HealthServiceDeliveryAreas");
                 });
@@ -355,7 +361,7 @@ namespace DataAccessLibrary.Migrations
                 {
                     b.HasOne("DataAccessLibrary.Models.HealthAuthority", "HealthAuthority")
                         .WithMany("HealthServiceDeliveryAreas")
-                        .HasForeignKey("HealthAuthorityID1");
+                        .HasForeignKey("HealthAuthorityID");
                 });
 
             modelBuilder.Entity("DataAccessLibrary.Models.LabTestReport", b =>

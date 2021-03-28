@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccessLibrary.Migrations
 {
-    public partial class InitialDBCreation : Migration
+    public partial class InitDBCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -133,6 +133,7 @@ namespace DataAccessLibrary.Migrations
                 {
                     DimHealthServiceDeliveryAreaKey = table.Column<Guid>(nullable: false),
                     HealthServiceDeliveryAreaID = table.Column<Guid>(nullable: false),
+                    Area = table.Column<string>(type: "nvarchar(128)", nullable: true),
                     DimHealthAuthorityKey = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -203,14 +204,15 @@ namespace DataAccessLibrary.Migrations
                 columns: table => new
                 {
                     HealthServiceDeliveryAreaID = table.Column<Guid>(nullable: false),
-                    HealthAuthorityID1 = table.Column<Guid>(nullable: true)
+                    Area = table.Column<string>(type: "nvarchar(128)", nullable: true),
+                    HealthAuthorityID = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HealthServiceDeliveryAreas", x => x.HealthServiceDeliveryAreaID);
                     table.ForeignKey(
-                        name: "FK_HealthServiceDeliveryAreas_HealthAuthorities_HealthAuthorityID1",
-                        column: x => x.HealthAuthorityID1,
+                        name: "FK_HealthServiceDeliveryAreas_HealthAuthorities_HealthAuthorityID",
+                        column: x => x.HealthAuthorityID,
                         principalTable: "HealthAuthorities",
                         principalColumn: "HealthAuthorityID",
                         onDelete: ReferentialAction.Restrict);
@@ -280,9 +282,9 @@ namespace DataAccessLibrary.Migrations
                 column: "RegionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HealthServiceDeliveryAreas_HealthAuthorityID1",
+                name: "IX_HealthServiceDeliveryAreas_HealthAuthorityID",
                 table: "HealthServiceDeliveryAreas",
-                column: "HealthAuthorityID1");
+                column: "HealthAuthorityID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LabTestReports_HealthAuthorityID",

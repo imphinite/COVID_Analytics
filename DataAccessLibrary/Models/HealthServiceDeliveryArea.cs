@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLibrary.Models
 {
@@ -6,7 +7,9 @@ namespace DataAccessLibrary.Models
     {
         public Guid HealthServiceDeliveryAreaID { get; set; }
 
-        public Guid HealthAuthorityID;
+        [Column(TypeName = "nvarchar(128)")]
+        public string Area { get; set; }
+
         public HealthAuthority HealthAuthority { get; set; }
     }
 }
