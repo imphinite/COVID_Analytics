@@ -2,7 +2,6 @@
 using DataAccessLibrary.Models;
 using DataAccessLibrary.Dimensions;
 using System;
-using EntityFrameworkCore.Triggers;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -11,26 +10,6 @@ namespace DataAccessLibrary.Context
     public class AnalyticsContext : DbContext
     {
         public AnalyticsContext(DbContextOptions options) : base(options) { }
-
-        ///**
-        // * Enable triggers
-        // */
-        //public override Int32 SaveChanges()
-        //{
-        //    return this.SaveChangesWithTriggers(base.SaveChanges, acceptAllChangesOnSuccess: true);
-        //}
-        //public override Int32 SaveChanges(Boolean acceptAllChangesOnSuccess)
-        //{
-        //    return this.SaveChangesWithTriggers(base.SaveChanges, acceptAllChangesOnSuccess);
-        //}
-        //public override Task<Int32> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
-        //{
-        //    return this.SaveChangesWithTriggersAsync(base.SaveChangesAsync, acceptAllChangesOnSuccess: true, cancellationToken: cancellationToken);
-        //}
-        //public override Task<Int32> SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
-        //{
-        //    return this.SaveChangesWithTriggersAsync(base.SaveChangesAsync, acceptAllChangesOnSuccess, cancellationToken);
-        //}
 
         /**
          * OLTP
