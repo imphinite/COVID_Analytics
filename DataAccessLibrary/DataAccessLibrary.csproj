@@ -176,7 +176,14 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Triggers\AgeGroupETL.sql" />
+    <Content Include="Triggers\CaseETL.sql" />
+    <Content Include="Triggers\FactCaseETL.sql" />
+    <Content Include="Triggers\HealthAuthorityETL.sql" />
+    <Content Include="Triggers\HealthServiceDeliveryAreaETL.sql" />
+    <Content Include="Triggers\RegionETL.sql" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
