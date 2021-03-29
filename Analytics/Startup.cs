@@ -27,7 +27,7 @@ namespace Analytics
         {
             services.AddDbContext<AnalyticsContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("Default"));
+                options.UseSqlServer(Configuration.GetConnectionString("Local"));
             });
             services.AddRazorPages();
         }

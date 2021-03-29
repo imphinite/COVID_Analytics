@@ -7,7 +7,6 @@ using System.Linq;
 using DataAccessLibrary.Models;
 using Newtonsoft.Json.Linq;
 using MoreLinq;
-using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Analytics.Pages
@@ -30,13 +29,22 @@ namespace Analytics.Pages
 
         private void InitData ()
         {
-            //_db.HealthAuthorities.RemoveRange(_db.HealthAuthorities);
-            //_db.SaveChanges();
+            PurgeDB();
 
             InitRegions();
             InitHealthAuthorities();
 
             LoadSampleData();
+        }
+
+        private void PurgeDB ()
+        {
+            _db.DimRegions.RemoveRange(_db.DimRegions);
+            _db.HealthServiceDeliveryAreas.RemoveRange(_db.HealthServiceDeliveryAreas);
+            _db.HealthAuthorities.RemoveRange(_db.HealthAuthorities);
+            _db.Regions.RemoveRange(_db.Regions);
+
+            _db.SaveChanges();
         }
 
         private void InitRegions ()
@@ -74,7 +82,7 @@ namespace Analytics.Pages
                 string HA = record["HA"].ToString();
                 string HSDA = record["HSDA"].ToString();
 
-                HA_HSDA.Add(Tuple.Create<string, string>(HA, HSDA));
+                HA_HSDA.Add(Tuple.Create(HA, HSDA));
             }
             HA_HSDA = HA_HSDA.Distinct().ToList();
 

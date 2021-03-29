@@ -7,6 +7,7 @@ namespace DataAccessLibrary.Dimensions
     public class DimRegion
     {
         [Key]
+        [Column(TypeName = "uniqueidentifier default NEWID()")]
         public Guid DimRegionKey { get; set; }
 
         public Guid RegionID { get; set; }
