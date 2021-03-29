@@ -29,10 +29,11 @@ namespace Analytics.Pages
 
         private void InitData ()
         {
-            PurgeDB();
+            //PurgeDB();
 
             InitRegions();
             InitHealthAuthorities();
+            InitAgeGroup();
 
             LoadSampleData();
         }
@@ -43,6 +44,9 @@ namespace Analytics.Pages
             _db.HealthServiceDeliveryAreas.RemoveRange(_db.HealthServiceDeliveryAreas);
             _db.HealthAuthorities.RemoveRange(_db.HealthAuthorities);
             _db.Regions.RemoveRange(_db.Regions);
+
+            _db.AgeGroups.RemoveRange(_db.AgeGroups);
+            _db.Cases.RemoveRange(_db.Cases);
 
             _db.SaveChanges();
         }
@@ -108,11 +112,69 @@ namespace Analytics.Pages
             _db.SaveChanges();
         }
 
+        private void InitAgeGroup ()
+        {
+            if (_db.AgeGroups.Count() > 0) return;
+
+            string file = System.IO.File.ReadAllText("RawData/case_details_210320.json");
+            dynamic json = JsonConvert.DeserializeObject(file);
+
+            List<AgeGroup> ageGroups = new List<AgeGroup>();
+            foreach (JObject record in json)
+            {
+                AgeGroup ageGroup = new AgeGroup();
+                ageGroup.Range = record["Age_Group"].ToString();
+
+                ageGroups.Add(ageGroup);
+            }
+
+            List<AgeGroup> distinct = ageGroups.DistinctBy(ag => ag.Range).ToList();
+
+            _db.AddRange(distinct);
+            _db.SaveChanges();
+        }
+
         private void LoadSampleData()
         {
-            // var customers = JsonSerializer.Deserialize<List<Customer>>(file);
-            // _db.AddRange(customers);
-            // _db.SaveChanges();
+            if (_db.Cases.Count() > 0) return;
+
+            string file = System.IO.File.ReadAllText("RawData/case_details_210320.json");
+            dynamic json = JsonConvert.DeserializeObject(file);
+
+
+            List<Case> cases = new List<Case>();
+            foreach (JObject record in json)
+            {
+                string reportedDate = record["Reported_Date"].ToString();
+                string HA = record["HA"].ToString();
+                string sex = record["Sex"].ToString();
+                string ageGroup = record["Age_Group"].ToString();
+                string classificationReported = record["Classification_Reported"].ToString();
+
+                try
+                {
+                    // Find AgeGroup
+                    AgeGroup ag = _db.AgeGroups.Single(a => a.Range == ageGroup);
+                    // Find HealthAuthority
+                    HealthAuthority ha = _db.HealthAuthorities.Where(h => h.Region.Name == HA).Single();
+
+                    Case COVID_case = new Case();
+                    COVID_case.ReportedDate = DateTime.Parse(reportedDate);
+                    COVID_case.HealthAuthority = ha;
+                    COVID_case.Sex = sex;
+                    COVID_case.AgeGroup = ag;
+                    COVID_case.ClassificationReported = classificationReported;
+
+                    cases.Add(COVID_case);
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+            }
+
+            _db.AddRange(cases);
+            _db.SaveChanges();
         }
     }
 }

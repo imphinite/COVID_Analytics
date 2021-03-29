@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLibrary.Migrations
 {
     [DbContext(typeof(AnalyticsContext))]
-    [Migration("20210328001448_InitDBCreation")]
+    [Migration("20210329051928_InitDBCreation")]
     partial class InitDBCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,11 +30,8 @@ namespace DataAccessLibrary.Migrations
                     b.Property<Guid>("AgeGroupID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("LowerBound")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UpperBound")
-                        .HasColumnType("int");
+                    b.Property<string>("Range")
+                        .HasColumnType("nvarchar(128) default 'Unknown'");
 
                     b.HasKey("DimAgeGroupKey");
 
@@ -81,7 +78,7 @@ namespace DataAccessLibrary.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("DimRegionKey")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier default NEWID()");
 
                     b.Property<Guid>("HealthAuthorityID")
                         .HasColumnType("uniqueidentifier");
@@ -153,7 +150,7 @@ namespace DataAccessLibrary.Migrations
                 {
                     b.Property<Guid>("DimRegionKey")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier default NEWID()");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(128)");
@@ -175,11 +172,8 @@ namespace DataAccessLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("LowerBound")
-                        .HasColumnType("integer default '0'");
-
-                    b.Property<int>("UpperBound")
-                        .HasColumnType("int");
+                    b.Property<string>("Range")
+                        .HasColumnType("nvarchar(128) default 'Unknown'");
 
                     b.HasKey("AgeGroupID");
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLibrary.Dimensions
 {
@@ -10,8 +11,7 @@ namespace DataAccessLibrary.Dimensions
 
         public Guid AgeGroupID { get; set; }
 
-        public int LowerBound { get; set; }
-
-        public int UpperBound { get; set; }
+        [Column(TypeName = "nvarchar(128) default 'Unknown'")]
+        public string Range { get; set; }
     }
 }

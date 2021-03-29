@@ -12,8 +12,7 @@ namespace DataAccessLibrary.Migrations
                 columns: table => new
                 {
                     AgeGroupID = table.Column<Guid>(nullable: false),
-                    LowerBound = table.Column<int>(type: "integer default '0'", nullable: false),
-                    UpperBound = table.Column<int>(nullable: false)
+                    Range = table.Column<string>(type: "nvarchar(128) default 'Unknown'", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -26,8 +25,7 @@ namespace DataAccessLibrary.Migrations
                 {
                     DimAgeGroupKey = table.Column<Guid>(nullable: false),
                     AgeGroupID = table.Column<Guid>(nullable: false),
-                    LowerBound = table.Column<int>(nullable: false),
-                    UpperBound = table.Column<int>(nullable: false)
+                    Range = table.Column<string>(type: "nvarchar(128) default 'Unknown'", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,7 +36,7 @@ namespace DataAccessLibrary.Migrations
                 name: "DimRegions",
                 columns: table => new
                 {
-                    DimRegionKey = table.Column<Guid>(nullable: false),
+                    DimRegionKey = table.Column<Guid>(type: "uniqueidentifier default NEWID()", nullable: false),
                     RegionID = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", nullable: true),
                     Province = table.Column<string>(type: "nvarchar(128)", nullable: true)

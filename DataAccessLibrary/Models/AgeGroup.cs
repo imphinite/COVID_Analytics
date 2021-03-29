@@ -7,9 +7,7 @@ namespace DataAccessLibrary.Models
     {
         public Guid AgeGroupID { get; set; }
 
-        [Column(TypeName = "integer default '0'")]
-        public int LowerBound { get; set; }
-
-        public int UpperBound { get; set; }
+        [Column(TypeName = "nvarchar(128) default 'Unknown'")]
+        public string Range { get; set; }
     }
 }
