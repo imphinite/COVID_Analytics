@@ -162,6 +162,7 @@
     <Compile Include="Dimensions\DimLabTestReport.cs" />
     <Compile Include="Dimensions\DimRegion.cs" />
     <Compile Include="Dimensions\DimHealthServiceDeliveryArea.cs" />
+    <Compile Include="Facts\FactCases.cs" />
     <Compile Include="Migrations\20210329051928_InitDBCreation.cs" />
     <Compile Include="Migrations\20210329051928_InitDBCreation.designer.cs">
       <DependentUpon>20210329051928_InitDBCreation.cs</DependentUpon>
@@ -175,9 +176,7 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Facts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DataAccessLibrary.Models;
 using DataAccessLibrary.Dimensions;
+using DataAccessLibrary.Fact;
 using System;
 using System.Threading.Tasks;
 using System.Threading;
@@ -40,5 +41,7 @@ namespace DataAccessLibrary.Context
         public DbSet<DimLabTestReport> DimLabTestReports { get; set; }
 
         public DbSet<DimRegion> DimRegions { get; set; }
+
+        public DbSet<FactCases> FactCases { get; set; }
     }
 }

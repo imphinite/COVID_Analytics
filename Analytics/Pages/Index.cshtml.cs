@@ -73,6 +73,7 @@ namespace Analytics.Pages
             _db.AddRange(distinct);
             _db.SaveChanges();
         }
+
         private void InitHealthAuthorities ()
         {
             if (_db.HealthAuthorities.Count() > 0) return;
